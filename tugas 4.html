@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nura Beauty</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-deep: #c9738a;
+    --pink-mid: #e8a4b5;
+    --pink-light: #f5dde4;
+    --pink-pale: #fdf0f3;
+    --cream: #fff8f9;
+    --dark: #2d1a20;
+    --text: #5a3a43;
+    --gold: #c49a6c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 40px;
+    background: rgba(253, 240, 243, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,115,138,0.12);
+    transition: all 0.3s ease;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--pink-deep);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--pink-deep); }
+
+  .nav-right {
+    display: flex; align-items: center; gap: 20px;
+  }
+
+  .nav-cart {
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text); text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 22px; height: 1.5px; background: var(--text); display: block; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    background: linear-gradient(135deg, #f9e8ed 0%, #f0d0da 40%, #e8c5d2 100%);
+    position: relative; overflow: hidden;
+    padding-top: 80px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 70% 50%, rgba(232,164,181,0.35) 0%, transparent 70%);
+  }
+
+  .hero-blob {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,115,138,0.15) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 40px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 60px;
+  }
+
+  .hero-text { animation: fadeUp 0.9s ease both; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--pink-deep); font-weight: 500;
+    background: rgba(201,115,138,0.12);
+    padding: 6px 16px; border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+
+  .hero-title em {
+    font-style: italic; color: var(--pink-deep);
+  }
+
+  .hero-sub {
+    font-size: 0.95rem; line-height: 1.7;
+    color: #8a6070; max-width: 380px;
+    margin-bottom: 36px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--pink-deep);
+    color: #fff;
+    padding: 14px 36px;
+    border-radius: 40px;
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; text-decoration: none;
+    border: none; cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 30px rgba(201,115,138,0.35);
+  }
+  .btn-primary:hover {
+    background: var(--dark);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(45,26,32,0.25);
+  }
+
+  .hero-images {
+    position: relative; height: 500px;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+
+  .hero-img-main {
+    width: 220px; height: 340px;
+    background: linear-gradient(145deg, #e8c5d2, #d4a0b5);
+    border-radius: 20px;
+    position: absolute; top: 40px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 20px 60px rgba(201,115,138,0.3);
+    overflow: hidden;
+  }
+
+  .product-mockup {
+    width: 90px; height: 200px;
+    background: linear-gradient(180deg, #f5dde4 0%, #e8a4b5 100%);
+    border-radius: 12px 12px 30px 30px;
+    position: relative;
+    box-shadow: 4px 8px 20px rgba(0,0,0,0.1);
+  }
+
+  .product-mockup::after {
+    content: '';
+    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 30px; height: 30px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+  }
+
+  .hero-img-side {
+    width: 140px; height: 200px;
+    background: linear-gradient(145deg, #f5dde4, #e8c5d2);
+    border-radius: 16px;
+    position: absolute;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 15px 40px rgba(201,115,138,0.2);
+  }
+
+  .side-left { top: 120px; left: 0; transform: rotate(-5deg); }
+  .side-right { top: 80px; right: 0; transform: rotate(5deg); }
+
+  .product-tube {
+    width: 50px; height: 130px;
+    background: linear-gradient(180deg, #fff 0%, #f5dde4 100%);
+    border-radius: 8px 8px 20px 20px;
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .hero-tag {
+    position: absolute; background: #fff;
+    padding: 10px 18px; border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .tag-1 { top: 20px; left: -20px; }
+  .tag-2 { bottom: 80px; right: -10px; }
+  .tag-stars { color: #f5a623; margin-right: 4px; }
+
+  /* SECTION COMMON */
+  section { padding: 90px 40px; }
+
+  .section-center { max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--pink-deep); font-weight: 500; margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300; color: var(--dark);
+    line-height: 1.15;
+  }
+
+  /* BESTSELLERS */
+  .bestsellers { background: #fff; }
+
+  .bestsellers-header {
+    text-align: center; margin-bottom: 56px;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+
+  .product-card {
+    background: var(--pink-pale);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(201,115,138,0.2);
+  }
+
+  .product-img {
+    height: 220px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  .product-img-bg {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .p1 .product-img { background: linear-gradient(135deg, #f8d7e3, #f0b8cc); }
+  .p2 .product-img { background: linear-gradient(135deg, #fde8d0, #f5c5a3); }
+  .p3 .product-img { background: linear-gradient(135deg, #f0d8f0, #e0b0e0); }
+  .p4 .product-img { background: linear-gradient(135deg, #d8e8f8, #b0c8e8); }
+
+  .product-icon {
+    font-size: 3.5rem;
+    filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.1));
+    animation: bobble 3s ease-in-out infinite;
+  }
+
+  @keyframes bobble {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .product-badge {
+    position: absolute; top: 14px; left: 14px;
+    background: var(--pink-deep); color: #fff;
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px;
+  }
+
+  .product-info { padding: 18px 20px 22px; }
+
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--dark); margin-bottom: 4px;
+  }
+
+  .product-desc {
+    font-size: 0.78rem; color: #9e7a85; line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .product-price {
+    font-size: 0.95rem; font-weight: 500; color: var(--pink-deep);
+    margin-bottom: 14px;
+  }
+
+  .btn-add {
+    width: 100%;
+    background: var(--dark);
+    color: #fff;
+    padding: 10px 0;
+    border-radius: 30px;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; border: none; cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .btn-add:hover { background: var(--pink-deep); }
+
+  /* PROMO BANNER */
+  .promo-banner {
+    background: linear-gradient(120deg, var(--pink-light) 0%, #f8d5e0 50%, #f0c8d5 100%);
+    padding: 0;
+    position: relative; overflow: hidden;
+  }
+
+  .promo-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 380px; align-items: center;
+    padding: 60px 40px;
+    gap: 40px;
+  }
+
+  .promo-text .sale-label {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--pink-deep); font-weight: 600; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .sale-dot {
+    width: 6px; height: 6px; background: var(--pink-deep);
+    border-radius: 50%; animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.6; }
+  }
+
+  .promo-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300; color: var(--dark); line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .promo-title strong { font-weight: 600; color: var(--pink-deep); }
+
+  .promo-desc {
+    font-size: 0.9rem; color: #8a6070; line-height: 1.6;
+    max-width: 360px; margin-bottom: 32px;
+  }
+
+  .promo-visual {
+    display: flex; justify-content: center; align-items: center;
+    position: relative;
+  }
+
+  .promo-circle {
+    width: 260px; height: 260px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    box-shadow: 0 0 80px rgba(201,115,138,0.2);
+  }
+
+  .promo-emoji { font-size: 5rem; }
+
+  .promo-badge-float {
+    position: absolute;
+    background: var(--pink-deep); color: #fff;
+    width: 70px; height: 70px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em;
+    text-align: center; line-height: 1.2;
+    top: 10px; right: -10px;
+    box-shadow: 0 8px 20px rgba(201,115,138,0.4);
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .promo-badge-float span { font-size: 1rem; font-weight: 800; }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    background: var(--pink-pale);
+  }
+
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 28px; margin-top: 48px;
+  }
+
+  .testi-card {
+    background: #fff; border-radius: 20px;
+    padding: 28px; transition: all 0.3s ease;
+  }
+
+  .testi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(201,115,138,0.12);
+  }
+
+  .testi-stars { color: #f5a623; font-size: 0.9rem; margin-bottom: 14px; }
+
+  .testi-text {
+    font-size: 0.9rem; line-height: 1.7; color: var(--text);
+    font-style: italic; margin-bottom: 20px;
+  }
+
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink-mid), var(--pink-deep));
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 600; font-size: 0.85rem;
+  }
+
+  .testi-name { font-size: 0.82rem; font-weight: 600; color: var(--dark); }
+  .testi-handle { font-size: 0.75rem; color: #b09098; }
+
+  /* FEATURES */
+  .features {
+    background: #fff;
+  }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 28px; margin-top: 48px;
+  }
+
+  .feature-item { text-align: center; padding: 20px; }
+
+  .feature-icon {
+    font-size: 2.2rem; margin-bottom: 16px;
+    display: block;
+  }
+
+  .feature-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 600; color: var(--dark);
+    margin-bottom: 8px;
+  }
+
+  .feature-text { font-size: 0.82rem; color: #9e7a85; line-height: 1.6; }
+
+  /* NEWSLETTER */
+  .newsletter {
+    background: linear-gradient(135deg, var(--dark) 0%, #4a2535 100%);
+    text-align: center;
+  }
+
+  .newsletter .section-title { color: #fff; }
+  .newsletter .section-label { color: var(--pink-mid); }
+
+  .newsletter-sub {
+    font-size: 0.95rem; color: rgba(255,255,255,0.65);
+    max-width: 420px; margin: 12px auto 36px;
+    line-height: 1.7;
+  }
+
+  .newsletter-form {
+    display: flex; justify-content: center; gap: 0;
+    max-width: 420px; margin: 0 auto;
+  }
+
+  .newsletter-form input {
+    flex: 1; padding: 14px 24px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-right: none;
+    border-radius: 40px 0 0 40px;
+    color: #fff; font-size: 0.88rem;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .newsletter-form input::placeholder { color: rgba(255,255,255,0.4); }
+
+  .newsletter-form button {
+    padding: 14px 28px;
+    background: var(--pink-deep); color: #fff;
+    border: none; border-radius: 0 40px 40px 0;
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.25s;
+  }
+
+  .newsletter-form button:hover { background: var(--pink-mid); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    padding: 60px 40px 30px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .footer-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px; margin-bottom: 48px;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-style: italic; font-weight: 400;
+    color: var(--pink-mid); margin-bottom: 12px;
+    display: block;
+  }
+
+  .footer-desc { font-size: 0.85rem; line-height: 1.7; max-width: 220px; }
+
+  .footer-social { display: flex; gap: 12px; margin-top: 20px; }
+
+  .social-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; transition: background 0.25s; cursor: pointer;
+    text-decoration: none; color: rgba(255,255,255,0.7);
+  }
+
+  .social-icon:hover { background: var(--pink-deep); color: #fff; }
+
+  .footer-col h4 {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: #fff; margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col li {
+    font-size: 0.85rem; line-height: 2;
+    transition: color 0.2s; cursor: pointer;
+  }
+
+  .footer-col li:hover { color: var(--pink-mid); }
+
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.78rem;
+  }
+
+  /* SCROLL FADE */
+  .scroll-reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .scroll-reveal.revealed {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    section { padding: 60px 24px; }
+
+    .hero-content { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+    .hero-sub { margin: 0 auto 32px; }
+    .btn-primary { display: inline-block; }
+    .hero-images { height: 320px; }
+
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .promo-inner { grid-template-columns: 1fr; text-align: center; }
+    .promo-desc { margin: 0 auto 32px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Nura Beauty</a>
+  <ul class="nav-links">
+    <li><a href="#">Shop</a></li>
+    <li><a href="#">Skincare</a></li>
+    <li><a href="#">Makeup</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#" class="nav-cart">🛍 Cart (0)</a>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blob"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <span class="hero-badge">✦ Premium Skincare Collection</span>
+      <h1 class="hero-title">Beauty that<br><em>Begins</em> with You</h1>
+      <p class="hero-sub">Premium skincare designed to bring out your most luminous self. Pure formulas, visible results.</p>
+      <a href="#products" class="btn-primary">Shop the Collection →</a>
+    </div>
+    <div class="hero-images">
+      <div class="hero-img-main">
+        <div class="product-mockup"></div>
+      </div>
+      <div class="hero-img-side side-left">
+        <div class="product-tube"></div>
+      </div>
+      <div class="hero-img-side side-right">
+        <div class="product-tube" style="background: linear-gradient(180deg, #e8c5d2 0%, #c9738a 100%);"></div>
+      </div>
+      <div class="hero-tag tag-1"></div>Cruelty Free</div>
+      <div class="hero-tag tag-2"><span class="tag-stars">★★★★★</span> 4.9 (2.4k reviews)</div>
+    </div>
+  </div>
+</section>
+
+<!-- BESTSELLERS -->
+<section class="bestsellers" id="products">
+  <div class="section-center">
+    <div class="bestsellers-header scroll-reveal">
+      <p class="section-label">✦ Top Picks</p>
+      <h2 class="section-title">Our Bestsellers</h2>
+    </div>
+    <div class="products-grid">
+      <div class="product-card p1 scroll-reveal">
+        <div class="product-img">
+          <span class="product-badge">Best Seller</span>
+          <span class="product-icon">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDEK6KI7lxJpr_KuruuNLhWVT2Q6cNRv_CeYG2Lzu-0g&s=10"
+            style="width: 120px;
+            height: 130px;
+            border-radius: 20%">
+          </span>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Radiance Renewal Serum</div>
+          <div class="product-desc">Brightening vitamin C & hyaluronic acid blend</div>
+          <div class="product-price">$48.00</div>
+          <button class="btn-add">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card p2 scroll-reveal">
+        <div class="product-img">
+          <span class="product-icon">
+            <img src="https://us.laneige.com/cdn/shop/files/PT10_a224dab3-0716-4323-bd4d-4744b1722e63.jpg?v=1722625217&width=1080"
+            style="width: 120px;
+            height: 130px;
+            border-radius: 20%">
+          </span>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Hydrasilk Moisturiser</div>
+          <div class="product-desc">Deep hydration with ceramides & peptides</div>
+          <div class="product-price">$38.00</div>
+          <button class="btn-add">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card p3 scroll-reveal">
+        <div class="product-img">
+          <span class="product-badge">New</span>
+          <span class="product-icon">
+            <img src="https://id.laneige.com/cdn/shop/files/pdp_mig_2025-02-20-250220_final_INT_Glaze-Craze-Tinted-Lip-Serum_PDP_thumbnail01.jpg?v=1775182373"
+            style="width: 120px;
+            height: 130px;
+            border-radius: 20%">
+          </span>
+        </div>
+        <div class="product-info">
+                    <div class="product-name">Velour Lip Nectar</div>
+          <div class="product-desc">Plumping tinted balm with shea & rose oil</div>
+          <div class="product-price">$24.00</div>
+          <button class="btn-add">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card p4 scroll-reveal">
+        <div class="product-img">
+          <span class="product-icon">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9J0eP8iEpNBYlTRFfVyIL7_fOTJtpBiv3Xaf3xoHV2A&s=10"
+            style="width: 120px;
+            height: 130px;
+            border-radius: 20%">
+          </span>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Botanic Cleanse Gel</div>
+          <div class="product-desc">Gentle botanical cleanser for all skin types</div>
+          <div class="product-price">$28.00</div>
+          <button class="btn-add">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO BANNER -->
+<section class="promo-banner">
+  <div class="promo-inner">
+    <div class="promo-text scroll-reveal">
+      <div class="sale-label"><span class="sale-dot"></span>Limited Time Offer</div>
+      <h2 class="promo-title">Spring Beauty Sale<br><strong>Up to 40% OFF</strong></h2>
+      <p class="promo-desc">Fresh formulas. Soft hues. Skin that glows like spring mornings. Don't miss this season's biggest beauty event.</p>
+      <a href="#" class="btn-primary">Shop Now →</a>
+    </div>
+    <div class="promo-visual scroll-reveal">
+      <div class="promo-circle">
+        <span class="promo-emoji">
+          <img src="https://us.laneige.com/cdn/shop/files/aboutus_bfcollection.jpg?v=1754425142&width=640"
+          style="width: 300px;
+          height: 300px;
+          border-radius: 50%">
+        </span>
+        <div class="promo-badge-float"><span>40%</span>OFF</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-center">
+    <div class="scroll-reveal" style="text-align:center; margin-bottom: 8px;">
+      <p class="section-label">✦ Real Results</p>
+      <h2 class="section-title">Loved by Thousands</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card scroll-reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"My skin has never looked this fresh. The serum is absolutely incredible — I noticed a difference within the first week!"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SN</div>
+          <div>
+            <div class="testi-name">Sofia N.</div>
+            <div class="testi-handle">@sofianails • Verified</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card scroll-reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The moisturiser is so luxurious! Absorbed instantly and my skin felt plump all day. Worth every penny!"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MR</div>
+          <div>
+            <div class="testi-name">Maya R.</div>
+            <div class="testi-handle">@mayaglow • Verified</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card scroll-reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"I've tried so many lip products but this one is different. The formula is divine and the tint is gorgeous!"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">JK</div>
+          <div>
+            <div class="testi-name">Jasmine K.</div>
+            <div class="testi-handle">@jasminebeauty • Verified</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-center">
+    <div class="scroll-reveal" style="text-align:center;">
+      <p class="section-label">✦ Our Promise</p>
+      <h2 class="section-title">Why Choose Nura?</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item scroll-reveal">
+        <span class="feature-icon">🌿</span>
+        <div class="feature-title">100% Natural</div>
+        <p class="feature-text">Formulated with pure botanical ingredients, free from harsh chemicals.</p>
+      </div>
+      <div class="feature-item scroll-reveal">
+        <span class="feature-icon">🐰</span>
+        <div class="feature-title">Cruelty Free</div>
+        <p class="feature-text">Never tested on animals. Leaping Bunny certified since day one.</p>
+      </div>
+      <div class="feature-item scroll-reveal">
+        <span class="feature-icon">♻️</span>
+        <div class="feature-title">Eco Packaging</div>
+        <p class="feature-text">Sustainable, recyclable packaging designed to reduce our footprint.</p>
+      </div>
+      <div class="feature-item scroll-reveal">
+        <span class="feature-icon">🔬</span>
+        <div class="feature-title">Dermatologist Tested</div>
+        <p class="feature-text">Clinically tested and approved for all skin types including sensitive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="section-center scroll-reveal">
+    <p class="section-label">✦ Stay in the Loop</p>
+    <h2 class="section-title">Ready to Glow?</h2>
+    <p class="newsletter-sub">Join thousands who've transformed their skincare routine. Get exclusive offers and early access to new launches.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Enter your email address">
+      <button>Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-logo">Nura Beauty</span>
+      <p class="footer-desc">Premium skincare crafted to bring out your most luminous self. Clean beauty for real results.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdS0REEVJhQvRAdvEHBCZaq9DepPNQGQHbq_UPkAgocmazPdIMC0QhkmE&s=10"
+          style="width: 40px;
+          height: 40px;
+          border-radius: 50%">
+        </a>
+        <a href="#" class="social-icon">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfTcaLH-hjCYvsirVgrAaXu1lmGVl-JiDjLF25qAoGGw&s=10"
+          style="width: 40px;
+          height: 40px;
+          border-radius: 50%">
+        </a>
+        <a href="#" class="social-icon">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrjYh_uC4YXeuboOy7379cYhBe7mnC3eJTe1APHAA0Ng&s=10"
+          style="width: 40px;
+          height: 40px;
+          border-radius: 50%">
+        </a>
+        <a href="#" class="social-icon">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFU2VMjoD4n7bfOGh-MFShbPcdxOYFyHFsXlCtLizPEA&s"
+          style="width: 40px;
+          height: 40px;
+          border-radius: 50%">
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li>Shop All</li>
+        <li>Skincare</li>
+        <li>Makeup</li>
+        <li>Gift Sets</li>
+        <li>About Us</li>
+        <li>Blog</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li>FAQ</li>
+        <li>Shipping & Returns</li>
+        <li>Track Order</li>
+        <li>Contact Us</li>
+        <li>Loyalty Program</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li>121 Bloom Avenue</li>
+        <li>Rosewood, CA 94208</li>
+        <li>Mon–Fri 9am–5pm PST</li>
+        <li>hello@nurabeauty.com</li>
+        <li>+1 (310) 812-3616</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Nura Beauty. All rights reserved.</span>
+    <span>Privacy Policy · Terms · Cookie Settings</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.scroll-reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('revealed'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Add to cart feedback
+  document.querySelectorAll('.btn-add').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const orig = this.textContent;
+      this.textContent = '✓ Added!';
+      this.style.background = '#4a9e6e';
+      setTimeout(() => {
+        this.textContent = orig;
+        this.style.background = '';
+      }, 1500);
+    });
+  });
+
+  // Newsletter
+  document.querySelector('.newsletter-form button').addEventListener('click', function() {
+    const input = document.querySelector('.newsletter-form input');
+    if (input.value.includes('@')) {
+      input.value = '';
+      input.placeholder = 'You\'re in! Welcome to Nura ✓';
+      this.textContent = 'Done!';
+      setTimeout(() => {
+        input.placeholder = 'Enter your email address';
+        this.textContent = 'Subscribe';
+      }, 3000);
+    }
+  });
+
+  // Smooth scroll for hero CTA
+  document.querySelector('.hero .btn-primary').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector('#products').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
